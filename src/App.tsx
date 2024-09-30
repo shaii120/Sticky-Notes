@@ -49,12 +49,18 @@ function App() {
     setContent("")
   }
 
+  function handleRemoveNote(event: React.FormEvent, noteToRemove: Note) {
+    event.stopPropagation()
+    const updatedNotesList: Note[] = notes.filter((note) => note.id !== noteToRemove.id)
+    setNotes(updatedNotesList)
+  }
+
   function createNote(note: Note) {
     return (
       <div className='note-item'
         onClick={() => handleNoteClick(note)}>
         <div className='notes-header'>
-          <button>x</button>
+          <button onClick={(event) => handleRemoveNote(event, note)}>x</button>
         </div>
         <h2>{note.title}</h2>
         <p>{note.content}</p>
