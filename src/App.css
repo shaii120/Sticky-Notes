@@ -78,3 +78,17 @@ input {
   background-color: rgb(108, 175, 198);
   cursor: pointer;
 }
+
+.edit-buttons {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 5px;
+}
+
+.edit-buttons button {
+  flex: 1
+}
+
+.edit-buttons button:last-of-type {
+  background-color: red;
+}
