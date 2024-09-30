@@ -26,6 +26,9 @@ function App() {
     }
   ])
 
+  const [title, setTitle] = useState("")
+  const [content, setContent] = useState("")
+
   function createNote(note: Note) {
     return (
       <div className='note-item'>
@@ -38,16 +41,35 @@ function App() {
     )
   }
 
+  function handleAddNote(event: React.FormEvent) {
+    const newNote: Note = {
+      id: notes.length + 1,
+      title: title,
+      content: content
+    }
+
+    event.preventDefault()
+    setNotes([newNote, ...notes])
+    setTitle("")
+    setContent("")
+  }
+
+
   return (
     <div className="app-container">
       <form
         className='note-form'
+        onSubmit={(event) => handleAddNote(event)}
       >
         <input
+          value={title}
+          onChange={(event) => setTitle(event.target.value)}
           placeholder='Title'
           required
         />
         <textarea
+          value={content}
+          onChange={(event) => setContent(event.target.value)}
           placeholder='Content'
           rows={10}
           required
