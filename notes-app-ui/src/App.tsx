@@ -9,27 +9,10 @@ type Note = {
 
 function App() {
   const [notes, setNotes] = useState<Note[]>([])
-  const apiURI = "http://localhost:5000/api"
-
-  useEffect(() => {
-    async function fetchNotes() {
-      try {
-        const response = await fetch(`${apiURI}/notes`)
-        const notes: Note[] = await response.json()
-
-        setNotes(notes)
-      }
-      catch (error) {
-        console.log(error)
-      }
-    }
-
-    fetchNotes()
-  }, [])
-
   const [title, setTitle] = useState("")
   const [content, setContent] = useState("")
   const [selectedNote, setSelectedNote] = useState<Note | null>(null)
+  const apiURI = "http://localhost:5000/api"
 
   function handleNoteClick(note: Note) {
     setSelectedNote(note)
@@ -53,7 +36,7 @@ function App() {
       })
       const newNote: Note = await response.json()
 
-      setNotes([newNote, ...notes])
+      setNotes([...notes, newNote])
       setTitle("")
       setContent("")
     }
@@ -133,6 +116,23 @@ function App() {
     setContent("")
     setSelectedNote(null)
   }
+
+
+  useEffect(() => {
+    async function fetchNotes() {
+      try {
+        const response = await fetch(`${apiURI}/notes`)
+        const notes: Note[] = await response.json()
+
+        setNotes(notes)
+      }
+      catch (error) {
+        console.log(error)
+      }
+    }
+
+    fetchNotes()
+  }, [])
 
   return (
     <div className="app-container">
